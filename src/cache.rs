@@ -56,3 +56,13 @@ pub fn list() {
        }
     }
 }
+
+pub fn installed(package: String) -> bool {
+    let path = format!("/home/{}/.cache/ach/{}", whoami::username(), package);
+
+    if path::Path::new(&path).exists() {
+        return true;
+    } else {
+        return false;
+    }
+}

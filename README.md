@@ -35,3 +35,10 @@ You can clear **all** the cache with this command
 ```bash
 ach -Cc
 ```
+
+#### Get information about a package
+Get information about a package using this command, keep in mind that the package must be installed and found in the cache
+
+```bash
+ach -Qi aur_package
+```

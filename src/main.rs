@@ -14,13 +14,26 @@ fn main() {
         .arg_required_else_help(true)
         .author("Valerio Clemenzi")
         .subcommand(
+            Command::new("query")
+                .short_flag('Q')
+                .long_flag("query")
+                .about("Query package")
+                .arg(
+                    Arg::new("info")
+                        .short('i')
+                        .num_args(1)
+                        .long("info")
+                        .help("Get information about a package")
+                )
+        )
+        .subcommand(
             Command::new("sync")
                 .short_flag('S')
                 .long_flag("sync")
                 .about("Install a package from the AUR")
                 .arg(
                     Arg::new("package")
-                        .help("packages")
+                        .help("The packages")
                         .num_args(1..)
                 )
         )
@@ -31,7 +44,7 @@ fn main() {
                 .about("Remove an installed package from the AUR")
                 .arg(
                     Arg::new("package")
-                        .help("packages")
+                        .help("The packages")
                         .num_args(1..)
                 )
         )
@@ -115,6 +128,17 @@ fn main() {
             } else {
                 cache::list();
             }
+        }
+
+        Some(("query", smatches)) => {
+            // Cache
+            cache::create_cache();
+
+            let info = smatches
+                .get_one::<String>("info")
+                .expect("is present");
+
+            package::info(info.to_string());
         }
 
         _ => unreachable!(),

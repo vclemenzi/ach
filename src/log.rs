@@ -39,3 +39,15 @@ pub fn cache_info(entries: usize) {
 pub fn cache_package_removed() {
     println!("Package(s) successfully cancelled!");
 }
+
+pub fn package_information(package: String) {
+    println!("Information for {}", package.cyan());
+}
+
+pub fn deps_info(name: String, installed: bool) {
+    if installed {
+        println!("[{}] {}", "Installed".green(), name);
+    } else {
+        println!("[{}] {}", "Missing".red(), name);
+    }
+}

@@ -3,6 +3,7 @@ use crate::{log, cache, deps};
 use tar::Archive;
 use std::process::{Command, Stdio};
 use flate2::read::GzDecoder;
+use rayon::prelude::*;
 
 pub fn install(package: String) {
     let req = reqwest::blocking::get(format!("https://aur.archlinux.org/cgit/aur.git/snapshot/{}.tar.gz", package)).unwrap();
@@ -83,4 +84,29 @@ pub fn remove(package: String) {
     } else {
         log::impossible_remove_package_tip();
     }
+}
+
+pub fn info(package: String) {
+    let exists = cache::installed(package.clone());
+    let pkgbuild_path = format!("/home/{}/.cache/ach/{}/PKGBUILD", whoami::username(), package);
+    
+    if !exists {
+        log::cache_package_not_found(package.clone());
+
+        return;
+    }
+
+    log::package_information(package);
+
+    let deps = deps::get(&pkgbuild_path);
+
+    deps.par_iter().for_each(|dep| {
+        let output = Command::new("pacman")
+            .arg("-Qi")
+            .arg(dep)
+            .output()
+            .expect("Error!");
+
+        log::deps_info(dep.to_string(), output.status.success());
+    });
 }
