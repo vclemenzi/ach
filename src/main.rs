@@ -3,6 +3,7 @@ use clap::{Arg, Command};
 mod package;
 mod log;
 mod cache;
+mod deps;
 mod utils;
 
 fn main() {

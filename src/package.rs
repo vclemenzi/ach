@@ -1,5 +1,5 @@
 use std::{fs::{self, File}, io::Write};
-use crate::{log, cache};
+use crate::{log, cache, deps};
 use tar::Archive;
 use std::process::{Command, Stdio};
 use flate2::read::GzDecoder;
@@ -18,6 +18,7 @@ pub fn install(package: String) {
     let tar_path = format!("/home/{}/.cache/ach/{}.tar.gz", whoami::username(), package);
     let dir_path = format!("/home/{}/.cache/ach/{}", whoami::username(), package);
     let cache_path = format!("/home/{}/.cache/ach/", whoami::username());
+    let pkgbuild_path = format!("{}/PKGBUILD", dir_path);
 
     let mut tar = File::create(&tar_path).unwrap();
     tar.write_all(&bytes).unwrap();
@@ -29,6 +30,26 @@ pub fn install(package: String) {
 
     fs::remove_file(tar_path)
         .expect("Error!");
+
+    // Install depends
+    let deps = deps::get(&pkgbuild_path);
+
+    if !deps.is_empty() {
+        let output = Command::new("sudo")
+            .arg("pacman")
+            .arg("-S")
+            .args(&deps)
+            .current_dir(&dir_path)
+            .stdin(Stdio::inherit())
+            .stdout(Stdio::inherit())
+            .stderr(Stdio::inherit())
+            .output()
+            .expect("Failed to execute makepkg");
+
+        if !output.status.success() {
+            return;
+        }
+    }
 
     let output = Command::new("makepkg")
         .arg("-si")

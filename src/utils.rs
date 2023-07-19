@@ -1,5 +1,4 @@
 use std::io::{self, Write};
-
 use colored::Colorize;
 
 pub fn confirm(prompt: &str) -> bool {
@@ -20,3 +19,5 @@ pub fn confirm(prompt: &str) -> bool {
         }
     }
 }
+
+
