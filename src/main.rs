@@ -89,6 +89,8 @@ fn main() {
 
             if clear {
                 cache::clear();
+            } else {
+                cache::list();
             }
         }
 

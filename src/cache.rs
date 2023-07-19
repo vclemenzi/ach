@@ -1,5 +1,4 @@
 use std::{fs, path};
-
 use crate::{log, utils};
 
 pub fn create_cache() {
@@ -32,12 +31,28 @@ pub fn clear() {
     for entry in entries {
         let entry = entry.unwrap();
 
-        let file_path = entry.path();
+        let dir_path = entry.path();
         
-        if file_path.is_dir() {
-            fs::remove_dir_all(file_path).unwrap();
+        if dir_path.is_dir() {
+            fs::remove_dir_all(dir_path).unwrap();
         }
     }
 
     log::cache_cleaned(e_len);
+}
+
+pub fn list() {
+    let path = format!("/home/{}/.cache/ach", whoami::username());
+    let entries: Vec<_> = fs::read_dir(&path).unwrap().collect();
+
+    log::cache_info(entries.len());
+
+    for entry in entries {
+       let entry = entry.unwrap();
+       let dir_path = entry.path();
+
+       if dir_path.is_dir() {
+            log::cache_package_info(&dir_path.to_str().unwrap());
+       }
+    }
 }

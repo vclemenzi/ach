@@ -27,3 +27,11 @@ pub fn impossible_remove_package_tip() {
 pub fn cache_cleaned(entries: usize) {
     println!("Cache cleaned by {} elements successfully!", entries.to_string().blue());
 }
+
+pub fn cache_package_info(entry: &str) {
+    println!("{}", entry.cyan());
+}
+
+pub fn cache_info(entries: usize) {
+    println!("The cache currently contains {} directories", entries.to_string().cyan());
+}
