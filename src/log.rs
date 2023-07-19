@@ -23,3 +23,7 @@ pub fn impossible_remove_package_tip() {
     println!("{}: Often some packages have `-bin`, `-beta` or similar flags", "Tip".cyan());
     println!("{}: So double-check the name and see if there are any final words or similar", "Tip".cyan());
 }
+
+pub fn cache_cleaned(entries: usize) {
+    println!("Cache cleaned by {} elements successfully!", entries.to_string().blue());
+}

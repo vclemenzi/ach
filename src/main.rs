@@ -3,6 +3,7 @@ use clap::{Arg, Command};
 mod package;
 mod log;
 mod cache;
+mod utils;
 
 fn main() {
     let matches = Command::new("ach")
@@ -31,6 +32,19 @@ fn main() {
                     Arg::new("package")
                         .help("packages")
                         .num_args(1..)
+                )
+        )
+        .subcommand(
+            Command::new("cache")
+                .short_flag('C')
+                .long_flag("cache")
+                .about("Manage the ach cache")
+                .arg(
+                    Arg::new("clear")
+                        .short('c')
+                        .num_args(0)
+                        .long("clear")
+                        .help("Clear the cache")
                 )
         )
         .get_matches();
@@ -65,6 +79,19 @@ fn main() {
                 let _ = package::remove(package.to_string());
             }
         }
+
+        Some(("cache", smatches)) => {
+            // Cache
+            cache::create_cache();
+
+            let clear: bool = smatches
+                .get_flag("clear");
+
+            if clear {
+                cache::clear();
+            }
+        }
+
         _ => unreachable!(),
     }
 }
