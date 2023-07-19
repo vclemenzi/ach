@@ -46,6 +46,14 @@ fn main() {
                         .long("clear")
                         .help("Clear the cache")
                 )
+                .arg(
+                    Arg::new("remove")
+                        .short('r')
+                        .num_args(1..)
+                        .conflicts_with("clear")
+                        .long("remove")
+                        .help("Remove a package in the cache")
+                )
         )
         .get_matches();
 
@@ -87,8 +95,22 @@ fn main() {
             let clear: bool = smatches
                 .get_flag("clear");
 
+            let remove: Vec<_> = smatches
+                .get_many::<String>("remove")
+                .expect("is present")
+                .map(|s| s.as_str())
+                .collect();
+
             if clear {
                 cache::clear();
+            } if !remove.is_empty() {
+                if utils::confirm("Do you want to delete this package(s)") {
+                    for package in remove {
+                        cache::remove(package.to_string());
+                    }
+
+                   log::cache_package_removed(); 
+                }
             } else {
                 cache::list();
             }

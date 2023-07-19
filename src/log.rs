@@ -35,3 +35,7 @@ pub fn cache_package_info(entry: &str) {
 pub fn cache_info(entries: usize) {
     println!("The cache currently contains {} directories", entries.to_string().cyan());
 }
+
+pub fn cache_package_removed() {
+    println!("Package(s) successfully cancelled!");
+}
