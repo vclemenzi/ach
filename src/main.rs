@@ -22,6 +22,17 @@ fn main() {
                         .num_args(1..)
                 )
         )
+        .subcommand(
+            Command::new("remove")
+                .short_flag('R')
+                .long_flag("remove")
+                .about("Remove an installed package from the AUR")
+                .arg(
+                    Arg::new("package")
+                        .help("packages")
+                        .num_args(1..)
+                )
+        )
         .get_matches();
 
     match matches.subcommand() {
@@ -37,6 +48,21 @@ fn main() {
 
             for package in packages {
                 let _ = package::install(package.to_string());
+            }
+        }
+
+        Some(("remove", smatches)) => {
+            // Cache
+            cache::create_cache();
+
+            let packages: Vec<_> = smatches
+                .get_many::<String>("package")
+                .expect("is present")
+                .map(|s| s.as_str())
+                .collect();
+
+            for package in packages {
+                let _ = package::remove(package.to_string());
             }
         }
         _ => unreachable!(),

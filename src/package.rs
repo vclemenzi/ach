@@ -1,5 +1,5 @@
 use std::{fs::{self, File}, io::Write};
-use crate::log;
+use crate::{log, cache};
 use tar::Archive;
 use std::process::{Command, Stdio};
 use flate2::read::GzDecoder;
@@ -41,5 +41,25 @@ pub fn install(package: String) {
 
     if output.status.success() {
         log::package_installed(package);
+    }
+}
+
+pub fn remove(package: String) {
+    cache::remove(package.clone());
+
+    let output = Command::new("sudo")
+        .arg("pacman")
+        .arg("-R")
+        .arg(&package)
+        .stdin(Stdio::inherit())
+        .stdout(Stdio::inherit())
+        .stderr(Stdio::inherit())
+        .output()
+        .expect("Failed to execute makepkg");
+
+    if output.status.success() {
+        log::package_removed(package.clone());
+    } else {
+        log::impossible_remove_package_tip();
     }
 }
