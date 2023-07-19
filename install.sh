@@ -15,7 +15,7 @@ if ! command -v rustc &>/dev/null; then
   # Rustup is not installed, so install it
   print_color_message "33;1" "Rust is not installed. Installing..."
   sudo pacman -S rustup
-  rustup stable
+  rustup default stable
   # Add Rust to PATH
   source $HOME/.cargo/env
   print_color_message "32;1" "Rust has been installed."
@@ -41,20 +41,31 @@ print_color_message "32;1" "Repository cloned to $tmp_file"
 # Navigate to the cloned repository directory
 cd "$tmp_file"
 
+print_color_message "33;1" "Configuring Rust toolchain..."
+rustup default stable
+
 # Build the binary using cargo
 print_color_message "33;1" "Building the binary with cargo..."
 cargo build --release
 
-# Move the binary to /usr/bin
-print_color_message "33;1" "Moving the binary to /usr/bin..."
-cp target/release/ach /usr/bin/
+# Check if the binary was successfully built
+if [ -f "target/release/ach" ]; then
+  # Move the binary to /usr/bin
+  print_color_message "33;1" "Moving the binary to /usr/bin..."
+  sudo cp target/release/ach /usr/bin/
+  print_color_message "32;1" "Binary moved to /usr/bin"
+else
+  print_color_message "31;1" "Error: Failed to build the binary. Aborting installation."
+  exit 1
+fi
 
-print_color_message "32;1" "Binary moved to /usr/bin"
-
+# Clean up - remove the temporary directory
 print_color_message "33;1" "Cleaning up - Removing the temporary directory..."
+cd ..
 rm -rf "$tmp_dir"
 print_color_message "32;1" "Temporary directory removed."
 
 # Run the ach command
 print_color_message "32;1" "Installation completed successfully."
 print_color_message "32;1" "You can now use the 'ach' command."
+

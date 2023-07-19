@@ -6,12 +6,9 @@ version = 3
 name = "ach"
 version = "0.1.0"
 dependencies = [
- "alpm",
- "aur-depends",
  "clap",
  "colored",
  "flate2",
- "raur",
  "rayon",
  "reqwest",
  "tar",
@@ -32,35 +29,6 @@ name = "adler"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f26201604c87b1e01bd3d98f8d5d9a8fcbb815e8cedb41ffccbeb4bf593a35fe"
-
-[[package]]
-name = "alpm"
-version = "2.2.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9cc4aac5bdc7152a8158fabee3037597fefe54c296e45903743e4a2655dcd9cc"
-dependencies = [
- "alpm-sys",
- "bitflags 1.3.2",
-]
-
-[[package]]
-name = "alpm-sys"
-version = "2.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fee1afe3484685ecedf03aefd7904428befed7815687e48aa4b21b3417eeecf0"
-dependencies = [
- "pkg-config",
-]
-
-[[package]]
-name = "alpm-utils"
-version = "2.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01c6892a7ced000868007e9ee99a80680c96f5b3e535e9ade81a54501e391232"
-dependencies = [
- "alpm",
- "pacmanconf",
-]
 
 [[package]]
 name = "anstream"
@@ -109,31 +77,6 @@ checksum = "180abfa45703aebe0093f79badacc01b8fd4ea2e35118747e5811127f926e188"
 dependencies = [
  "anstyle",
  "windows-sys",
-]
-
-[[package]]
-name = "async-trait"
-version = "0.1.71"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a564d521dd56509c4c47480d00b80ee55f7e385ae48db5744c67ad50c92d2ebf"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
-name = "aur-depends"
-version = "3.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "984f00e299fbc2ecfed8bde81ae35c3145c105284b8fa04301313c3b4bf4169a"
-dependencies = [
- "alpm",
- "alpm-utils",
- "bitflags 1.3.2",
- "log",
- "raur",
- "srcinfo",
 ]
 
 [[package]]
@@ -198,12 +141,6 @@ name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
-
-[[package]]
-name = "cini"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8628d1f5b9a7b1196ce1aa660e3ba7e2559d350649cbe94993519c127df667f2"
 
 [[package]]
 name = "clap"
@@ -801,15 +738,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "pacmanconf"
-version = "2.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ba64fdfa5d4589657dc8c8497b67322d8a64c162357ea0359656bfe23eec6185"
-dependencies = [
- "cini",
-]
-
-[[package]]
 name = "percent-encoding"
 version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -849,18 +777,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5fe8a65d69dd0808184ebb5f836ab526bb259db23c657efa38711b1072ee47f0"
 dependencies = [
  "proc-macro2",
-]
-
-[[package]]
-name = "raur"
-version = "7.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dafb3f375eedbb68b8c57a79cb220171ad1b716196fa35d4ab059f5fda21cc17"
-dependencies = [
- "async-trait",
- "reqwest",
- "serde",
- "serde_derive",
 ]
 
 [[package]]
@@ -1024,17 +940,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "30e27d1e4fd7659406c492fd6cfaf2066ba8773de45ca75e855590f856dc34a9"
 
 [[package]]
-name = "serde_derive"
-version = "1.0.171"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "389894603bd18c46fa56231694f8d827779c0951a667087194cf9de94ed24682"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "serde_json"
 version = "1.0.103"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1075,12 +980,6 @@ dependencies = [
  "libc",
  "winapi",
 ]
-
-[[package]]
-name = "srcinfo"
-version = "1.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ceaee0d48949e3aa5365945de3e467e797b30b4f8636c2e580121a293fd77519"
 
 [[package]]
 name = "strsim"
