@@ -1,6 +1,12 @@
 # ACH
 Another of the many Arch User Repository helpers written in Rust.
 
+## Install Guide
+Run this command:
+```bash
+curl https://raw.githubusercontent.com/vclemenzi/ach/main/install.sh | sudo sh
+```
+
 ## Usage
 Its usage is very simple and basic
 
