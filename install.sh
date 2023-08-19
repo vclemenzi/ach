@@ -16,8 +16,6 @@ if ! command -v rustc &>/dev/null; then
   print_color_message "33;1" "Rust is not installed. Installing..."
   sudo pacman -S rustup
   rustup default stable
-  # Add Rust to PATH
-  source $HOME/.cargo/env
   print_color_message "32;1" "Rust has been installed."
 else
   print_color_message "32;1" "Rust is already installed."
